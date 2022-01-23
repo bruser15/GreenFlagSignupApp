@@ -67,29 +67,31 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-
         passwordErrorBox = findViewById(R.id.cl_password_error);
         passwordErrorText = findViewById(R.id.tv_error_password);
         passwordCheck = false;
         password = findViewById(R.id.et_password);
-        /*
+        passwordMatch = false;
+        passwordRepeat = findViewById(R.id.et_password_repeat);
         password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(!b){
-                    if(checkPassword()){
-                        passwordIsCorrect();
+                    if(passwordRepeat.getText().toString().equals(password.getText().toString())) {
+                        passwordsMatch();
+                        if (checkPassword()) {
+                            passwordIsCorrect();
+
+                        } else {
+                            passwordError();
+                        }
                     }
                     else{
-                        passwordError();
+                        passwordsMismatch();
                     }
                 }
             }
         });
-         */
-
-        passwordMatch = false;
-        passwordRepeat = findViewById(R.id.et_password_repeat);
         passwordRepeat.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
