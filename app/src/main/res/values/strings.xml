@@ -14,5 +14,6 @@
     <string name="customers_can">GreenFlag customers can \ncreate an account to access</string>
     <string name="match_error">Your passwords don\'t match</string>
     <string name="email_error">An account already exists for this email address</string>
+    <string name="email_invalid">The email you entered isn\'t valid</string>
     <string name="email_list">List of emails\njohnsmith@emailaddress.com</string>
 </resources>

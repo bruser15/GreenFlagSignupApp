@@ -10,6 +10,7 @@ import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,9 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,11 +61,17 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if(!b){
-                    if(checkEmail()){
-                        emailIsCorrect();
+                    if(emailValid(email.getText().toString())){
+                        emailIsValid();
+                        if(checkEmail()){
+                            emailIsCorrect();
+                        }
+                        else{
+                            emailError();
+                        }
                     }
                     else{
-                        emailError();
+                        emailIsInvalid();
                     }
                 }
             }
@@ -124,6 +134,25 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
+    private void emailIsInvalid() {
+        emailCheck = false;
+        emailErrorBox.setVisibility(View.VISIBLE);
+        email.setForeground(this.getDrawable(R.drawable.outline));
+        email.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.cross,0);
+        TextView emailErrorText = findViewById(R.id.tv_error_email);
+        emailErrorText.setText(R.string.email_invalid);
+        buttonDisable();
+    }
+
+    private void emailIsValid() {
+        TextView emailErrorText = findViewById(R.id.tv_error_email);
+        emailErrorText.setText(R.string.email_error);
+    }
+
+    private boolean emailValid(String input) {
+        return (!input.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(input).matches());
+    }
+
     private boolean checkEmail() {
         File path = this.getFilesDir();
         File emails = new File(path, "emails.txt");
@@ -142,20 +171,20 @@ public class SignupActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         String emailList = new String(b);
+        if(emailList.isEmpty()){
+            //No email addresses are registered, input can't already exist
+            return true;
+        }
 
         String input = email.getText().toString();
-        return (input.contains("@") && !emailList.toLowerCase().contains(input));
-    }
-
-    private void passwordsMismatch() {
-        passwordMatch = false;
-        passwordErrorBox.setVisibility(View.VISIBLE);
-        passwordErrorText.setText(R.string.match_error);
-        passwordRepeat.setForeground(this.getDrawable(R.drawable.outline));
-        passwordRepeat.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.cross,0);
-        password.setForeground(this.getDrawable(R.drawable.outline));
-        password.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.cross, 0);
-        buttonDisable();
+        List<String> eList = Arrays.asList(emailList.split("\n"));
+        for(ListIterator<String> iterator = eList.listIterator(); iterator.hasNext();){
+            String itEmail = iterator.next();
+            if(itEmail.toLowerCase().equals(input.toLowerCase())){
+                return false;
+            }
+        }
+        return true;
     }
 
     private void buttonDisable() {
@@ -170,6 +199,17 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
+    private void passwordsMismatch() {
+        passwordMatch = false;
+        passwordErrorBox.setVisibility(View.VISIBLE);
+        passwordErrorText.setText(R.string.match_error);
+        passwordRepeat.setForeground(this.getDrawable(R.drawable.outline));
+        passwordRepeat.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.cross,0);
+        password.setForeground(this.getDrawable(R.drawable.outline));
+        password.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.cross, 0);
+        buttonDisable();
+    }
+
     private void passwordsMatch() {
         passwordMatch = true;
         passwordErrorBox.setVisibility(View.GONE);
@@ -179,7 +219,6 @@ public class SignupActivity extends AppCompatActivity {
         password.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.tick,0);
         buttonActive();
     }
-
 
     private void passwordError() {
         passwordCheck = false;

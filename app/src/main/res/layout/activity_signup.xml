@@ -120,7 +120,6 @@
         android:backgroundTint="#FFFFFF"
         android:ems="10"
         android:fontFamily="@font/museosans500"
-        android:foreground="@drawable/green_outline"
         android:inputType="textEmailAddress"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
