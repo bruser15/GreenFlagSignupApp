@@ -16,6 +16,7 @@
         app:layout_constraintHorizontal_bias="0.24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:contentDescription="@string/tick"
         app:srcCompat="@drawable/tick" />
 
     <ImageView
@@ -27,6 +28,7 @@
         app:layout_constraintHorizontal_bias="0.24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        android:contentDescription="@string/tick"
         app:srcCompat="@drawable/tick" />
 
     <TextView
@@ -97,7 +99,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.110000014"
-        app:srcCompat="@drawable/logo_green_flag" />
+        app:srcCompat="@drawable/logo_green_flag"
+        android:contentDescription="@string/greenFlag_logo_description" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -109,6 +112,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_customers"
         app:layout_constraintVertical_bias="0.060000002"
+        android:contentDescription="@string/tick"
         app:srcCompat="@drawable/tick" />
 
     <Button

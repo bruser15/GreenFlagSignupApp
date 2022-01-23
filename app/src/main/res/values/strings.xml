@@ -16,4 +16,8 @@
     <string name="email_error">An account already exists for this email address</string>
     <string name="email_invalid">The email you entered isn\'t valid</string>
     <string name="email_list">List of emails\njohnsmith@emailaddress.com</string>
+    <string name="greenFlag_logo_description">GreenFlag No Matter What</string>
+    <string name="tick">Tick</string>
+    <string name="back">Back</string>
+    <string name="cross">Error</string>
 </resources>

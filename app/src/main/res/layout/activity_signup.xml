@@ -109,6 +109,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_left_24"
+        android:contentDescription="@string/back"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
@@ -124,7 +125,10 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_email"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:importantForAutofill="no"
+        android:labelFor="@id/et_email"/>
 
     <EditText
         android:id="@+id/et_password"
@@ -138,7 +142,8 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_password" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_password"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/et_password_repeat"
@@ -151,7 +156,9 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_password_repeat" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_password_repeat"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
 
     <TextView
         android:id="@+id/tv_criteria"
@@ -206,7 +213,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.29000002"
-            app:srcCompat="@drawable/cross" />
+            app:srcCompat="@drawable/cross"
+            android:contentDescription="@string/cross" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -246,7 +254,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.29000002"
-            app:srcCompat="@drawable/cross" />
+            app:srcCompat="@drawable/cross"
+            android:contentDescription="@string/cross" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -32,32 +31,21 @@ public class ListActivity extends AppCompatActivity {
         int l = (int) emails.length();
         byte[] b = new byte[l];
         try{
-            FileInputStream ins = new FileInputStream(emails);
-            try{
+            try (FileInputStream ins = new FileInputStream(emails)) {
                 ins.read(b);
 
-            } finally {
-                ins.close();
             }
         }
         catch (IOException e) {
             e.printStackTrace();
         }
         String emailList = new String(b);
-        StringBuilder builder = new StringBuilder();
-        builder.append(emailList).append(email).append("\n");
-        emailList = builder.toString();
+        emailList = emailList + email + "\n";
 
         try{
-            FileOutputStream stream = new FileOutputStream(emails);
-            FileOutputStream pStream = new FileOutputStream(passwords);
-            try{
+            try (FileOutputStream stream = new FileOutputStream(emails); FileOutputStream pStream = new FileOutputStream(passwords)) {
                 stream.write(emailList.getBytes());
                 pStream.write(pass.getBytes());
-            }
-            finally {
-                stream.close();
-                pStream.close();
             }
 
         }

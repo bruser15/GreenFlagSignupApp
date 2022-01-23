@@ -3,6 +3,7 @@ package com.example.greenflagsignup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -15,12 +16,10 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressLint("UseCompatLoadingForDrawables")
 public class SignupActivity extends AppCompatActivity {
 
     private EditText email;
@@ -51,22 +50,19 @@ public class SignupActivity extends AppCompatActivity {
         emailErrorBox = findViewById(R.id.cl_email_error);
         emailCheck = false;
         email = findViewById(R.id.et_email);
-        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(!b){
-                    if(emailValid(email.getText().toString())){
-                        emailIsValid();
-                        if(checkEmail()){
-                            emailIsCorrect();
-                        }
-                        else{
-                            emailError();
-                        }
+        email.setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                if(emailValid(email.getText().toString())){
+                    emailIsValid();
+                    if(checkEmail()){
+                        emailIsCorrect();
                     }
                     else{
-                        emailIsInvalid();
+                        emailError();
                     }
+                }
+                else{
+                    emailIsInvalid();
                 }
             }
         });
@@ -77,41 +73,35 @@ public class SignupActivity extends AppCompatActivity {
         password = findViewById(R.id.et_password);
         passwordMatch = false;
         passwordRepeat = findViewById(R.id.et_password_repeat);
-        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(!b){
-                    if(passwordRepeat.getText().toString().equals(password.getText().toString())) {
-                        passwordsMatch();
-                        if (checkPassword()) {
-                            passwordIsCorrect();
+        password.setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                if(passwordRepeat.getText().toString().equals(password.getText().toString())) {
+                    passwordsMatch();
+                    if (checkPassword()) {
+                        passwordIsCorrect();
 
-                        } else {
-                            passwordError();
-                        }
+                    } else {
+                        passwordError();
                     }
-                    else{
-                        passwordsMismatch();
-                    }
+                }
+                else{
+                    passwordsMismatch();
                 }
             }
         });
-        passwordRepeat.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(!b){
-                    if(passwordRepeat.getText().toString().equals(password.getText().toString())){
-                        passwordsMatch();
-                        if (checkPassword()) {
-                            passwordIsCorrect();
-                        }
-                        else{
-                            passwordError();
-                        }
+        passwordRepeat.setOnFocusChangeListener((view, b) -> {
+            if(!b){
+                if(passwordRepeat.getText().toString().equals(password.getText().toString())){
+                    passwordsMatch();
+                    if (checkPassword()) {
+                        passwordIsCorrect();
                     }
                     else{
-                        passwordsMismatch();
+                        passwordError();
                     }
+                }
+                else{
+                    passwordsMismatch();
                 }
             }
         });
@@ -127,6 +117,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void emailIsInvalid() {
         emailCheck = false;
@@ -153,12 +144,9 @@ public class SignupActivity extends AppCompatActivity {
         int l = (int) emails.length();
         byte[] b = new byte[l];
         try{
-            FileInputStream ins = new FileInputStream(emails);
-            try{
+            try (FileInputStream ins = new FileInputStream(emails)) {
                 ins.read(b);
 
-            } finally {
-                ins.close();
             }
         }
         catch (IOException e) {
@@ -171,10 +159,9 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         String input = email.getText().toString();
-        List<String> eList = Arrays.asList(emailList.split("\n"));
-        for(ListIterator<String> iterator = eList.listIterator(); iterator.hasNext();){
-            String itEmail = iterator.next();
-            if(itEmail.toLowerCase().equals(input.toLowerCase())){
+        String[] eList = emailList.split("\n");
+        for (String itEmail : eList) {
+            if (itEmail.equalsIgnoreCase(input)) {
                 return false;
             }
         }
