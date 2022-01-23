@@ -1,14 +1,9 @@
 package com.example.greenflagsignup;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.PorterDuff;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -23,7 +18,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -267,5 +261,13 @@ public class SignupActivity extends AppCompatActivity {
         email.setForeground(this.getDrawable(R.drawable.green_outline));
         email.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.tick, 0);
         buttonActive();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        email.setText("");
+        emailIsInvalid();
+        buttonDisable();
     }
 }
