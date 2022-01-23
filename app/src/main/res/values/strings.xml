@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">GreenFlagSignup</string>
+    <string name="create_password">Create password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="see_criteria">See criteria below</string>
+    <string name="criteria">Your password should have a minimum of 8 \ncharacters and contain at least one \nnumber, one uppercase and one lower \ncase letter. You can use special characters.</string>
+    <string name="password_error">One of the passwords you entered wasn\'t valid</string>
+    <string name="next">Next</string>
+    <string name="email_address">Email address</string>
+    <string name="benefit_3">Policy information</string>
+    <string name="benefit_2">Request a rescue online</string>
+    <string name="benefit_1">Car health updates</string>
+    <string name="customers_can">GreenFlag customers can \ncreate an account to access</string>
+    <string name="match_error">Your passwords don\'t match</string>
+    <string name="email_error">An account already exists for this email address</string>
+    <string name="email_list">List of emails\njohnsmith@emailaddress.com</string>
+</resources>
