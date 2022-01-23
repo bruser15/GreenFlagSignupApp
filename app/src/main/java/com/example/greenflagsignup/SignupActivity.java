@@ -75,7 +75,7 @@ public class SignupActivity extends AppCompatActivity {
         passwordRepeat = findViewById(R.id.et_password_repeat);
         password.setOnFocusChangeListener((view, b) -> {
             if(!b){
-                if(passwordRepeat.getText().toString().equals(password.getText().toString())) {
+                if(passwordMatchTest()) {
                     passwordsMatch();
                     if (checkPassword()) {
                         passwordIsCorrect();
@@ -91,7 +91,7 @@ public class SignupActivity extends AppCompatActivity {
         });
         passwordRepeat.setOnFocusChangeListener((view, b) -> {
             if(!b){
-                if(passwordRepeat.getText().toString().equals(password.getText().toString())){
+                if(passwordMatchTest()){
                     passwordsMatch();
                     if (checkPassword()) {
                         passwordIsCorrect();
@@ -108,14 +108,24 @@ public class SignupActivity extends AppCompatActivity {
 
         nextButton = findViewById(R.id.btn_next_account);
         nextButton.setOnClickListener(view -> {
-            if(nextButton.isEnabled()) {
-                Intent next = new Intent();
-                next.setClass(SignupActivity.this, ListActivity.class);
-                next.putExtra("email", email.getText().toString());
-                next.putExtra("password", password.getText().toString());
-                startActivity(next);
+            if(passwordMatchTest() && checkPassword() && checkEmail() && emailValid(email.getText().toString())) {
+                buttonActive();
+                if (nextButton.isEnabled()) {
+                    Intent next = new Intent();
+                    next.setClass(SignupActivity.this, ListActivity.class);
+                    next.putExtra("email", email.getText().toString());
+                    next.putExtra("password", password.getText().toString());
+                    startActivity(next);
+                }
+                else {
+                    buttonActive();
+                }
             }
         });
+    }
+
+    private boolean passwordMatchTest() {
+        return passwordRepeat.getText().toString().equals(password.getText().toString());
     }
 
 
@@ -126,7 +136,7 @@ public class SignupActivity extends AppCompatActivity {
         email.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.cross,0);
         TextView emailErrorText = findViewById(R.id.tv_error_email);
         emailErrorText.setText(R.string.email_invalid);
-        buttonDisable();
+        buttonActive();
     }
 
     private void emailIsValid() {
@@ -168,15 +178,13 @@ public class SignupActivity extends AppCompatActivity {
         return true;
     }
 
-    private void buttonDisable() {
-        nextButton.setEnabled(false);
-        nextButton.setAlpha(0.5F);
-    }
-
     private void buttonActive() {
         if(emailCheck && passwordCheck && passwordMatch){
             nextButton.setEnabled(true);
             nextButton.setAlpha(1);
+        } else{
+            nextButton.setEnabled(false);
+            nextButton.setAlpha(0.5F);
         }
     }
 
@@ -188,7 +196,7 @@ public class SignupActivity extends AppCompatActivity {
         passwordRepeat.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.cross,0);
         password.setForeground(this.getDrawable(R.drawable.outline));
         password.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.cross, 0);
-        buttonDisable();
+        buttonActive();
     }
 
     private void passwordsMatch() {
@@ -209,7 +217,7 @@ public class SignupActivity extends AppCompatActivity {
         password.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.cross, 0);
         passwordRepeat.setForeground(this.getDrawable(R.drawable.outline));
         passwordRepeat.setCompoundDrawablesWithIntrinsicBounds(0,0, R.drawable.cross,0);
-        buttonDisable();
+        buttonActive();
     }
 
     private void passwordIsCorrect() {
@@ -239,7 +247,7 @@ public class SignupActivity extends AppCompatActivity {
         emailErrorBox.setVisibility(View.VISIBLE);
         email.setForeground(this.getDrawable(R.drawable.outline));
         email.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.cross,0);
-        buttonDisable();
+        buttonActive();
     }
 
     private void emailIsCorrect() {
@@ -255,6 +263,6 @@ public class SignupActivity extends AppCompatActivity {
         super.onRestart();
         email.setText("");
         emailIsInvalid();
-        buttonDisable();
+        buttonActive();
     }
 }
